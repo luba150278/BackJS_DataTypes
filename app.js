@@ -160,6 +160,20 @@ function Review(ID, autor, date, comments, rating) {
   this.comment = comments ? comments : "";
   this.rating = rating ? rating : [];
 }
+//=============Search=======================
+function searchProducts(products, search) {
+  const arr = products.filter(
+    (item) =>
+      item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 ||
+      item.description.toLowerCase().indexOf(search.toLowerCase()) !== -1
+  );
+  return arr;
+}
+//=================Sort===============
+function sortProducts(products, sortRule) {
+  const arr = products.sort((a, b) => (a[sortRule] > b[sortRule] ? 1 : -1));
+  return arr;
+}
 
 //=========================Data=====================
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -183,7 +197,7 @@ const prod1 = new Product(
   goodsID[0],
   goods[0],
   goodsDesc[0],
-  5.5,
+  555.5,
   brands[0],
   sizes,
   sizes[0],
@@ -229,7 +243,7 @@ prod1.setName("T-Short new");
 
 console.log("Get product description: " + prod2.getDescr());
 prod2.setDescr(
-  "Товарищи! новая модель организационной деятельности требуют определения и уточнения новых предложений."
+  "Товарищи! новая модель значений организационной деятельности требуют определения и уточнения новых предложений."
 );
 
 console.log(`${getTextToConsole("price")}${prod1.getPrice()}`);
@@ -291,3 +305,10 @@ console.log(prod3.getReviews());
 console.log(`Average rating for product 1: ${prod1.getAverageRating()}`);
 console.log(`Average rating for product 2: ${prod2.getAverageRating()}`);
 console.log(`Average rating for product 3: ${prod3.getAverageRating()}`);
+
+console.log("==================Search======================");
+console.log(searchProducts([prod1, prod2, prod3], "знач"));
+console.log("==================Sort======================");
+console.log(sortProducts([prod1, prod2, prod3], "name"))
+console.log(sortProducts([prod1, prod2, prod3], "ID"))
+console.log(sortProducts([prod1, prod2, prod3], "price"))
