@@ -1,0 +1,29 @@
+{
+  "requires": true,
+  "lockfileVersion": 1,
+  "dependencies": {},
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend nodejs course from SHPP",
+  "main": "dataTypes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luba150278/BackJS_SHPP_Course.git"
+  },
+  "keywords": [
+    "backend",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luba150278/BackJS_SHPP_Course/issues"
+  },
+  "homepage": "https://github.com/luba150278/BackJS_SHPP_Course#readme",
+  "devDependencies": {
+    "colors": "^1.4.0"
+  }
+}
