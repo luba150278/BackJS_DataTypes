@@ -6,6 +6,7 @@ const getTextToConsole = (text) => {
   return `Get product ${text}: `;
 };
 //===========Constructor for Product=================
+
 function Product(
   ID,
   name,

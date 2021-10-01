@@ -1,22 +1,48 @@
+
+/**
+ * Main constructor-function for check email/phone/password using "the regular expressions"
+ */
 function Validator() {
-  this.validateEmail = function (email) {
-    
+  /**
+   * format: firstpart@secondpart.end
+   * first part: letters, digits, .+-. First symbol just letter/digit. Length 2-20
+   * secondpart: letters, digits, .!$%&’*+/=?^_- Length 1-15
+   * end - domain: just letters, Length 1-5
+   * @param {*} email string expression
+   * @returns true/false
+   */
+  this.validateEmail = function (email) {    
     const regexp =
       /^[a-z | 0-9]{1}[a-z | 0-9 | \. | \- | \+]{1,19}@{1}[a-z | 0-9 | \. | ! | $ | % | & | ' | * | \+ | \/ | = ]{1,14}[\.]{1}[a-z]{1,5}$/i;
     return regexp.test(email);
   };
+  /**
+   * format: +38 (099) 567 8901
+   * +38 - the country code is optional
+   * () - optional
+   * expression can contain any number of "-" and spaces 
+   * the max expression length is 25 symbols
+   * @param {*} phone string expression
+   * @returns true/false
+   */
   this.validatePhone = function (phone) {
     const regexp =
       /^(\+?(\d[\- ]*){2})?[\- ]*(\(?(\d[\- ]*){3}\)?)[\- ]*(\d[\- ]*){7}$/;
     return regexp.test(phone) && phone.length <= 25;
   };
+  /**
+   * the min expression length is 8 symbols. Password can contains just letters, digits and "_"
+   * the password must contain at least one capital letter, one small letter and one number;
+   * @param {*} pass string expression
+   * @returns true/false
+   */
   this.validatePassword = function (pass) {
-    const regexp = /^[\p{Lu}+\p{Ll}+\d+_*]{8,}$/gu;
+    const regexp = /^[\p{Lu}+\p{Ll}+\d+_*]{8,}$/u;
     return regexp.test(pass);
   };
 }
-const colors = require("colors/safe");
-const val = new Validator();
+const colors = require("colors/safe"); //Use for create color text in console
+const val = new Validator(); 
 //-------TestData---------------
 const validEmailsArr = [
   "fi@secondpart.end",
