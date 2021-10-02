@@ -1,4 +1,3 @@
-
 /**
  * Main constructor-function for check email/phone/password using "the regular expressions"
  */
@@ -11,24 +10,24 @@ function Validator() {
    * @param {*} email string expression
    * @returns true/false
    */
-  this.validateEmail = function (email) {    
+  this.validateEmail = function (email) {
     const regexp =
-      /^[a-z | 0-9]{1}[a-z | 0-9 | \. | \- | \+]{1,19}@{1}[a-z | 0-9 | \. | ! | $ | % | & | ' | * | \+ | \/ | = ]{1,14}[\.]{1}[a-z]{1,5}$/i;
+      /^([\da-z]){1}([\da-z-\.\+]){1,19}(@){1}([\da-z\.!$%&'\*+\/=\?\^_-]{1,14})(\.){1}([a-z]{1,5})$/i;
     return regexp.test(email);
   };
   /**
    * format: +38 (099) 567 8901
    * +38 - the country code is optional
    * () - optional
-   * expression can contain any number of "-" and spaces 
+   * expression can contain any number of "-" and spaces
    * the max expression length is 25 symbols
    * @param {*} phone string expression
    * @returns true/false
    */
   this.validatePhone = function (phone) {
     const regexp =
-      /^(\+?(\d[\- ]*){2})?[\- ]*(\(?(\d[\- ]*){3}\)?)[\- ]*(\d[\- ]*){7}$/;
-    return regexp.test(phone) && phone.length <= 25;
+      /^(?=.{1,25}$)(\+?(\d[\- ]*){2})?[\- ]*(\(?(\d[\- ]*){3}\)?)([\- ]*\d[\- ]*){7}$/;
+    return regexp.test(phone);
   };
   /**
    * the min expression length is 8 symbols. Password can contains just letters, digits and "_"
@@ -42,12 +41,14 @@ function Validator() {
   };
 }
 const colors = require("colors/safe"); //Use for create color text in console
-const val = new Validator(); 
+const val = new Validator();
 //-------TestData---------------
 const validEmailsArr = [
   "fi@secondpart.end",
   "first-part@.se=cond%p.art.end",
   "first.part@se=cond%part.r",
+  "first.part@.!$%&'*+/=?^_-.r",
+  "first.part@a!$%&'*+/=?^_b.gmail",
 ];
 const unValidEmailsArr = [
   "f@secondart.end",
@@ -95,11 +96,19 @@ console.log(
 console.log(
   `${colors.magenta("-------------------Valid emails---------------------")}`
 );
-validEmailsArr.map((item) => console.log(`check: ${colors.cyan(item)} -> ${colors.green(val.validateEmail(item))}`));
+validEmailsArr.map((item) =>
+  console.log(
+    `check: ${colors.cyan(item)} -> ${colors.green(val.validateEmail(item))}`
+  )
+);
 console.log(
   `${colors.magenta("-------------------Unvalid emails---------------------")}`
 );
-unValidEmailsArr.map((item) => console.log(`check: ${colors.cyan(item)} -> ${colors.red(val.validateEmail(item))}`));
+unValidEmailsArr.map((item) =>
+  console.log(
+    `check: ${colors.cyan(item)} -> ${colors.red(val.validateEmail(item))}`
+  )
+);
 
 //===================================PHONES===================================
 console.log(
@@ -108,11 +117,19 @@ console.log(
 console.log(
   `${colors.magenta("-------------------Valid phones---------------------")}`
 );
-validPhonesArr.map((item) => console.log(`check: ${colors.cyan(item)} -> ${colors.green(val.validatePhone(item))}`));
+validPhonesArr.map((item) =>
+  console.log(
+    `check: ${colors.cyan(item)} -> ${colors.green(val.validatePhone(item))}`
+  )
+);
 console.log(
   `${colors.magenta("-------------------Unvalid phones---------------------")}`
 );
-unValidPhonesArr.map((item) => console.log(`check: ${colors.cyan(item)} -> ${colors.red(val.validatePhone(item))}`));
+unValidPhonesArr.map((item) =>
+  console.log(
+    `check: ${colors.cyan(item)} -> ${colors.red(val.validatePhone(item))}`
+  )
+);
 
 //===================================PASSWORDS===================================
 console.log(
@@ -122,10 +139,18 @@ console.log(
 console.log(
   `${colors.magenta("-------------------Valid passwords---------------------")}`
 );
-validPasswordsArr.map((item) => console.log(`check: ${colors.cyan(item)} -> ${colors.green(val.validatePassword(item))}`));
-console.log(
-  `${colors.magenta("-------------------Unvalid passwords---------------------")}`
+validPasswordsArr.map((item) =>
+  console.log(
+    `check: ${colors.cyan(item)} -> ${colors.green(val.validatePassword(item))}`
+  )
 );
-unValidPasswordsArr.map((item) => console.log(`check: ${colors.cyan(item)} -> ${colors.red(val.validatePassword(item))}`));
-
-
+console.log(
+  `${colors.magenta(
+    "-------------------Unvalid passwords---------------------"
+  )}`
+);
+unValidPasswordsArr.map((item) =>
+  console.log(
+    `check: ${colors.cyan(item)} -> ${colors.red(val.validatePassword(item))}`
+  )
+);
