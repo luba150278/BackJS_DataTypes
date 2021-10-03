@@ -44,7 +44,6 @@ Product.prototype.setPrice = function (price) {
   this.price = price;
   console.log(`${changeTextForConsole("price")}"${this.price}"`);
 };
-
 Product.prototype.getFullInformation = function () {
   let str = "";
   for (key in this) {
@@ -318,7 +317,4 @@ const tv = new Electronics(
   warranty[0],
   power[0]
 );
-
-
-console.log(searchProducts([ tv], "dress"))
 
