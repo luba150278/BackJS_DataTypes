@@ -22,6 +22,33 @@ function Product(keys) {
     });
   }
 }
+Product.prototype.getReviewByID = function (ID) {
+  return this.props.reviews.filter((item) => item.ID === ID).length > 0
+    ? this.props.reviews.filter((item) => item.ID === ID)
+    : "Nothing to find";
+};
+Product.prototype.getImage = function (index) {
+  return index
+    ? this.props.images[index]
+      ? this.props.images[index]
+      : this.props.images[0]
+    : this.props.images[0];
+};
+Product.prototype.addReview = function (rev) {
+  this.props.reviews.push(rev);
+};
+Product.prototype.deleteReview = function (ID) {
+  const index = this.props.reviews.findIndex((item) => item.ID === ID);
+  this.props.reviews.splice(index, 1);
+};
+Product.prototype.getAverageRating = function () {
+  let ratAvg = [];
+  this.props.reviews.map((item) => {
+    ratAvg = ratAvg.concat(Object.values(item.rating));
+  });
+
+  return ratAvg.reduce((a, b) => a + b) / ratAvg.length;
+};
 /**
  * method to form information about class exemplar properties and values
  * @returns result string
@@ -55,15 +82,7 @@ Product.prototype.getPriceForQuantity = function (n) {
  */
 function Clothes(data) {
   this.props = data;
-  //------------Methods------------
-  this.getReviewByID = function (ID) {
-    return this.props.reviews.filter((item) => item.ID === ID).length > 0
-      ? this.props.reviews.filter((item) => item.ID === ID)
-      : "Nothing to find";
-  };
-  this.getImage = function (index) {
-    return index ? this.props.images[index] ? this.props.images[index] : this.props.images[0]: this.props.images[0];
-  };
+
   this.addSize = function (param) {
     this.props.sizes.push(param);
   };
@@ -71,21 +90,7 @@ function Clothes(data) {
     const index = this.props.sizes.indexOf(param);
     this.props.sizes.splice(index, 1);
   };
-  this.addReview = function (rev) {
-    this.props.reviews.push(rev);
-  };
-  this.deleteReview = function (ID) {
-    const index = this.props.reviews.findIndex((item) => item.ID === ID);
-    this.props.reviews.splice(index, 1);
-  };
-  this.getAverageRating = function () {
-    let ratAvg = [];
-    this.props.reviews.map((item) => {
-      ratAvg = ratAvg.concat(Object.values(item.rating));
-    });
-
-    return ratAvg.reduce((a, b) => a + b) / ratAvg.length;
-  };
+  
 }
 Clothes.prototype = Object.create(Product.prototype); //bind Clothes class and Product(parent class)
 
@@ -141,303 +146,3 @@ const electroItems = [
   new Electronics(data().allElectr()[1]),
   new Electronics(data().allElectr()[2]),
 ];
-
-//-------------------------getFullInformation() method test--------------
-
-console.log(
-  `${colors.yellow(
-    "===================TEST getFullInformation()=================="
-  )}`
-);
-wear.map((item, index) => {
-  console.log(
-    colors.magenta(
-      `-----------Clothes class object with index in wear array: ${index}-----------`
-    )
-  );
-  console.log(item.getFullInformation());
-});
-electroItems.map((item, index) => {
-  console.log(
-    colors.magenta(
-      `-----------Electronics class object with index in wear array: ${index}-----------`
-    )
-  );
-  console.log(item.getFullInformation());
-});
-//-------------------------getFullInformation() method test--------------
-console.log(
-  `${colors.yellow(
-    "===================TEST getPriceForQuantity()=================="
-  )}`
-);
-console.log(`${colors.magenta("----------Clothes objects array----")}`);
-wear.map((item) => {
-  const randomQuntity = Math.ceil(Math.random() * 100);
-  console.log(
-    `n=${colors.cyan(randomQuntity)} ; summary price is ${colors.green(
-      item.getPriceForQuantity(randomQuntity)
-    )}`
-  );
-});
-console.log(`${colors.magenta("----------Electronics objects array----")}`);
-electroItems.map((item) => {
-  const randomQuntity = Math.ceil(Math.random() * 100);
-  console.log(
-    `n=${colors.cyan(randomQuntity)} ; summary price is ${colors.green(
-      item.getPriceForQuantity(randomQuntity)
-    )}`
-  );
-});
-//-------------------------sortProducts() method test--------------
-console.log(
-  `${colors.yellow("===================TEST sortProducts()==================")}`
-);
-console.log(
-  `${colors.magenta("----------Clothes objects array -> sort by name ----")}`
-);
-console.log(sortProducts(wear, "name"));
-
-console.log(
-  `${colors.magenta(
-    "----------Electronics objects array -> sort by prices ----"
-  )}`
-);
-console.log(sortProducts(electroItems, "price"));
-
-//-------------------------searchProducts() method test--------------
-console.log(
-  `${colors.yellow(
-    "===================TEST searchProducts()=================="
-  )}`
-);
-console.log(
-  `${colors.magenta(
-    "----------Clothes objects array -> search word is 'опыт' ----"
-  )}`
-);
-console.log(searchProducts(wear, "опыт"));
-
-console.log(
-  `${colors.magenta(
-    "----------Electronics objects array -> search word is 'mobile' ----"
-  )}`
-);
-console.log(searchProducts(electroItems, "mobile"));
-
-//-----------getter tests------------------------
-console.log(
-  `${colors.yellow("===================TEST getters==================")}`
-);
-
-console.log(
-  `${colors.cyan("ID (wear[0])")}: ${colors.green(wear[0].props.ID)}`
-);
-console.log(
-  `${colors.cyan("name (wear[1])")}: ${colors.green(wear[1].props.name)}`
-);
-console.log(
-  `${colors.cyan("description (electroItems[0])")}: ${colors.green(
-    electroItems[0].props.description
-  )}`
-);
-console.log(
-  `${colors.cyan("price (electroItems[1])")}: ${colors.green(
-    electroItems[1].props.price
-  )}`
-);
-console.log(
-  `${colors.cyan("images (electroItems[2])")}: ${colors.green(
-    electroItems[2].props.images
-  )}`
-);
-console.log(
-  `${colors.cyan("brand (wear[2])")}: ${colors.green(wear[2].props.brand)}`
-);
-console.log(
-  `${colors.cyan("sizes (wear[0])")}: ${colors.green(wear[0].props.sizes)}`
-);
-console.log(
-  `${colors.cyan("activeSize (wear[1])")}: ${colors.green(
-    wear[1].props.activeSize
-  )}`
-);
-console.log(
-  `${colors.cyan("quantity (wear[2])")}: ${colors.green(
-    wear[2].props.quantity
-  )}`
-);
-console.log(
-  `${colors.cyan("date (wear[0])")}: ${colors.green(wear[0].props.date)}`
-);
-console.log(
-  `${colors.cyan("reviews (wear[1])")}: ${colors.green(wear[1].props.reviews)}`
-);
-console.log(
-  `${colors.cyan("material (wear[2])")}: ${colors.green(
-    wear[2].props.material
-  )}`
-);
-console.log(
-  `${colors.cyan("color (wear[0])")}: ${colors.green(wear[0].props.color)}`
-);
-console.log(
-  `${colors.cyan("warranty (electroItems[0])")}: ${colors.green(
-    electroItems[0].props.warranty
-  )}`
-);
-console.log(
-  `${colors.cyan("power (electroItems[1])")}: ${colors.green(
-    electroItems[1].props.power
-  )}`
-);
-//-----------setter tests------------------------
-console.log(
-  `${colors.yellow("===================TEST setters==================")}`
-);
-wear[0].props.ID = "xxxx";
-console.log(
-  `${colors.cyan("new ID (wear[0])")}: ${colors.green(
-    wear[0].props.ID
-  )}; old ID see before (in getter test)`
-);
-wear[1].props.name = "suit";
-console.log(
-  `${colors.cyan("new name (wear[1])")}: ${colors.green(
-    wear[1].props.name
-  )}; old name see before (in getter test)`
-);
-electroItems[0].props.description = "новое описание";
-console.log(
-  `${colors.cyan("description (electroItems[0])")}: ${colors.green(
-    electroItems[0].props.description
-  )}; old description see before (in getter test)`
-);
-electroItems[1].props.price = 84.6;
-console.log(
-  `${colors.cyan("price (electroItems[1])")}: ${colors.green(
-    electroItems[1].props.price
-  )}; old price see before (in getter test)`
-);
-electroItems[2].props.images = ["src4", "src5", "src6"];
-console.log(
-  `${colors.cyan("images (electroItems[2])")}: ${colors.green(
-    electroItems[2].props.images
-  )}; old price see before (in getter test)`
-);
-wear[2].props.brand = "Gabbana";
-console.log(
-  `${colors.cyan("brand (wear[2])")}: ${colors.green(
-    wear[2].props.brand
-  )}; old brand see before (in getter test)`
-);
-wear[0].props.sizes = ["38", "40", "42"];
-console.log(
-  `${colors.cyan("sizes (wear[0])")}: ${colors.green(
-    wear[0].props.sizes
-  )}; old sizes see before (in getter test)`
-);
-
-wear[1].props.activeSize = wear[1].props.sizes[0];
-console.log(
-  `${colors.cyan("activeSize (wear[1])")}: ${colors.green(
-    wear[1].props.activeSize
-  )}; old activeSize see before (in getter test)`
-);
-
-wear[2].props.quantity = 111;
-console.log(
-  `${colors.cyan("quantity (wear[2])")}: ${colors.green(
-    wear[2].props.quantity
-  )}; old quantity see before (in getter test)`
-);
-
-wear[0].props.date = Date.now();
-console.log(
-  `${colors.cyan("date (wear[0])")}: ${colors.green(
-    wear[0].props.date
-  )}; old date see before (in getter test)`
-);
-
-wear[1].props.reviews = [data().rev1];
-console.log(
-  `${colors.cyan("reviews (wear[1])")}: ${colors.green(
-    wear[1].props.reviews
-  )}; old reviews see before (in getter test)`
-);
-
-wear[2].props.material = [data().rev1];
-console.log(
-  `${colors.cyan("material (wear[2])")}: ${colors.green(
-    wear[2].props.material
-  )}; old material see before (in getter test)`
-);
-
-wear[0].props.color = "yellow";
-console.log(
-  `${colors.cyan("color (wear[0])")}: ${colors.green(
-    wear[0].props.color
-  )}; old color see before (in getter test)`
-);
-
-electroItems[0].props.warranty = "36"
-console.log(
-  `${colors.cyan("warranty (electroItems[0])")}: ${colors.green(
-    electroItems[0].props.warranty
-  )}; old warranty see before (in getter test)`
-);
-
-electroItems[1].props.power = "3000"
-console.log(
-  `${colors.cyan("power (electroItems[1])")}: ${colors.green(
-    electroItems[1].props.power
-  )}; old power see before (in getter test)`
-);
-console.log(
-  `${colors.yellow("===================TEST additional methods in Clothes class==================")}`
-);
-//-------------------------getReviewByID() method test--------------
-console.log(
-  `${colors.cyan("getReviewByID() method test: try to find review with id-> '2' in wear[0] ")}: ${colors.green(
-    wear[0].getReviewByID("2")
-  )}`
-);
-
-console.log(
-  `${colors.cyan("getImage() method test: try to find image with index-> 2 in wear[1] ")}: ${colors.green(
-    wear[1].getImage(2)
-  )}`
-);
-wear[2].addSize('XXXXXL')
-console.log(
-  `${colors.cyan("addSize() method test: try to add size -> 'XXXXXL' in wear[2]. See result: ")}: ${colors.green(
-    wear[2].props.sizes
-  )}`
-);
-
-wear[2].deleteSize('XXXXXL')
-console.log(
-  `${colors.cyan("deleteSize() method test: try to delete size -> 'XXXXXL' in wear[2]. See result: ")}: ${colors.green(
-    wear[2].props.sizes
-  )}`
-);
-
-wear[1].addReview(data().rev2)
-console.log(
-  `${colors.cyan("addReview() method test: try to add review  in wear[1]. See result: ")}: ${colors.green(
-    wear[1].props.reviews
-  )}`
-);
-wear[1].deleteReview("2")
-console.log(
-  `${colors.cyan("deleteReview() method test: try to delete review with id '2' in wear[1]. See result: ")}: ${colors.green(
-    wear[1].props.reviews
-  )}`
-);
-
-console.log(
-  `${colors.cyan("getAverageRating() method test: try to delete review with id '2' in wear[1]. See result: ")}: ${colors.green(
-    wear[1].props.reviews
-  )}`
-);
-
