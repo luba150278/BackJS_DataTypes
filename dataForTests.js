@@ -1,5 +1,8 @@
 const Chance = require("chance"); //random data generate library
 const chance = new Chance();
+const sizes = ["XS", "S", "L", "XL", "M", "XM"];
+const materials = ["cotton", "silk", "wool", "polyamid", "cashmere"];
+const itemID = chance.unique(chance.integer, 3, { min: 1, max: 3 });
 
 function dataForTests() {
   const commonProps = [
@@ -39,10 +42,10 @@ function dataForTests() {
       chance.integer({ min: 0, max: 10 }),
       chance.integer({ min: 0, max: 10 })
     );
-    const ID = chance.unique(chance.integer, index, {min: 1, max: index});
+    const idRev = chance.unique(chance.integer, index, { min: 1, max: index });
     for (let i = 0; i < index; i++) {
       arr[i] = new Review(
-        ID[i],
+        idRev[i],
         chance.name(),
         chance.date({ string: true, american: false, year: 2021 }),
         chance.sentence({ words: 7 }),
@@ -52,15 +55,14 @@ function dataForTests() {
 
     return arr;
   }
-  const sizes = ["XS", "S", "L", "XL", "M", "XM"];
-  const materials = ["cotton", "silk", "wool", "polyamid", "cashmere"];
-  const ID = chance.unique(chance.integer, 3, {min: 1, max: 3});
+
+
   const findCurrentValue = (field, index) => {
     switch (field) {
       case "ID":
-        return ID[index];
+        return itemID[index];
       case "name":
-        return chance.string({ pool: "abcdefoiklumn", length: 6 });
+        return chance.string({ pool: "ab", length: 6 });
       case "description":
         return chance.sentence({ words: 10 });
       case "price":
@@ -96,7 +98,7 @@ function dataForTests() {
     let objs = [];
     for (let i = 0; i < 3; i++) {
       const obj = {};
-      clothesAllProps.map((item, i) => {
+      clothesAllProps.map((item) => {
         obj[item] = findCurrentValue(item, i)
       });
       objs.push(obj);
@@ -107,7 +109,7 @@ function dataForTests() {
     let objs = [];
     for (let i = 0; i < 3; i++) {
       const obj = {};
-      electronicsAllProps.map((item, i) => {
+      electronicsAllProps.map((item) => {
         obj[item] = findCurrentValue(item, i)
       });
       objs.push(obj);

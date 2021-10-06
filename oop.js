@@ -117,7 +117,7 @@ function searchProducts(products, search) {
       item.props["description"].toLowerCase().indexOf(search.toLowerCase()) !==
         -1
   );
-  return arr;
+  return arr.length>0 ? [...new Set(arr)] : `Word ${search} wasn't find in name and decription fields`;
 }
 //=================Sort===============
 /**
@@ -156,7 +156,7 @@ console.log(
 wear.map((item, index) => {
   console.log(
     colors.magenta(
-      `-----------Clothes class object with index in wear array: ${index}-----------`
+      `-----------Clothes class object with index ${index} in 'wear' array: -----------`
     )
   );
   console.log(item.getFullInformation());
@@ -164,7 +164,7 @@ wear.map((item, index) => {
 electroItems.map((item, index) => {
   console.log(
     colors.magenta(
-      `-----------Electronics class object with index in wear array: ${index}-----------`
+      `-----------Electronics class object with index  ${index} in 'electroItems' array: -----------`
     )
   );
   console.log(item.getFullInformation());
@@ -217,17 +217,17 @@ console.log(
 );
 console.log(
   `${colors.magenta(
-    "----------Clothes objects array -> search word is 'опыт' ----"
+    "----------Clothes objects array -> search word is 'ba' ----"
   )}`
 );
-console.log(searchProducts(wear, "опыт"));
+console.log(searchProducts(wear, "ba"));
 
 console.log(
   `${colors.magenta(
-    "----------Electronics objects array -> search word is 'mobile' ----"
+    "----------Electronics objects array -> search word is 'om' ----"
   )}`
 );
-console.log(searchProducts(electroItems, "mobile"));
+console.log(searchProducts(electroItems, "om"));
 
 //-----------getter tests------------------------
 console.log(
@@ -401,13 +401,19 @@ console.log(
 
 //----------------Test getReviewByID-------------
 console.log(
-  `${colors.cyan("ID=1 try to find review in wear[1]")}: ${colors.green(
+  `${colors.cyan("getReviewbyID() method test. ID=1 try to find review in wear[1]")}: ${colors.green(
     wear[1].getReviewByID(1)    
   )}`
 );
 
 console.log(
-  `${colors.cyan("ID=2 try to find review in electroItems[2]")}: ${colors.green(
+  `${colors.cyan("getReviewbyID() method test. ID=2 try to find review in electroItems[2]")}: ${colors.green(
     electroItems[2].getReviewByID(2)    
   )}`
-); 
+);
+
+console.log(
+  `${colors.cyan("getImage() method test: try to find image with index-> 2 in wear[2] ")}: ${colors.green(
+    wear[2].getImage(2)
+  )}`
+);
