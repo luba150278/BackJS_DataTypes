@@ -363,14 +363,14 @@ console.log(
   )}; old date see before (in getter test)`
 );
 
-wear[1].props.reviews = [data().rev1];
+wear[1].props.reviews = data().rev1;
 console.log(
   `${colors.cyan("reviews (wear[1])")}: ${colors.green(
     wear[1].props.reviews
   )}; old reviews see before (in getter test)`
 );
 
-wear[2].props.material = [data().rev1];
+wear[2].props.material = "burrete silk";
 console.log(
   `${colors.cyan("material (wear[2])")}: ${colors.green(
     wear[2].props.material
@@ -397,12 +397,17 @@ console.log(
     electroItems[1].props.power
   )}; old power see before (in getter test)`
 );
+
+
 //----------------Test getReviewByID-------------
-const ID = 1633499496046
 console.log(
-  `${colors.cyan("ID=1633499496046")}: ${colors.green(
-    wear.map(item => {
-      if(item.props.ID === ID) return item
-    })
+  `${colors.cyan("ID=1 try to find review in wear[1]")}: ${colors.green(
+    wear[1].getReviewByID(1)    
   )}`
 );
+
+console.log(
+  `${colors.cyan("ID=2 try to find review in electroItems[2]")}: ${colors.green(
+    electroItems[2].getReviewByID(2)    
+  )}`
+); 
