@@ -32,22 +32,88 @@ function dataForTests() {
     this.quality = quality;
   }
   function getReviewsArray(index) {
+    const arr = [];
     const rat = new Rating(
       chance.integer({ min: 0, max: 10 }),
       chance.integer({ min: 0, max: 10 }),
       chance.integer({ min: 0, max: 10 }),
       chance.integer({ min: 0, max: 10 })
     );
-    return new Review(
-      Date.now(),
-      chance.name(),
-      chance.date({ string: true, american: false }),
-      chance.sentence({ words: 7 }),
-      rat
-    );
-  }
 
-  return {};
+    for (let i = 0; i < index; i++) {
+      arr[i] = new Review(
+        Date.now() + "",
+        chance.name(),
+        chance.date({ string: true, american: false, year: 2021 }),
+        chance.sentence({ words: 7 }),
+        rat
+      );
+    }
+
+    return arr;
+  }
+  const sizes = ["XS", "S", "L", "XL", "M", "XM"];
+  const materials = ["cotton", "silk", "wool", "polyamid", "cashmere"];
+  const findCurrentValue = (field) => {
+    switch (field) {
+      case "ID":
+        return Date.now() + "";
+      case "name":
+        return chance.string({ pool: "abcdefoiklumn", length: 6 });
+      case "description":
+        return chance.sentence({ words: 10 });
+      case "price":
+        return chance.floating({ min: 1, max: 1000, fixed: 2 });
+      case "images":
+        return [
+          chance.url({ extensions: ["gif", "jpg", "png"] }),
+          chance.url({ extensions: ["gif", "jpg", "png"] }),
+        ];
+      case "brand":
+        return chance.string({ pool: "abcdefoiklumn", length: 4 });
+      case "quantity":
+        return chance.integer({ min: 1, max: 10000 });
+      case "date":
+        return chance.date({ string: true, american: false, year: 2021 })
+      case "reviews":
+        return getReviewsArray(chance.integer({ min: 1, max: 4 }))
+      case "sizes":
+        return sizes
+      case "activeSize":
+        return sizes[chance.integer({ min: 0, max: sizes.length - 1 })]
+      case "material":
+        return materials[chance.integer({ min: 0, max: materials.length - 1 })]
+      case "color":
+        return chance.color({ format: 'hex' })
+      case "warranty":
+        return chance.integer({ min: 12, max: 60 })
+      default:
+        return chance.integer({ min: 60, max: 3000 })
+    }
+  };
+  const wears = () => {
+    let objs = [];
+    for (let i = 0; i < 3; i++) {
+      const obj = {};
+      clothesAllProps.map((item) => {
+        obj[item] = findCurrentValue(item)
+      });
+      objs.push(obj);
+    }
+    return objs;
+  };
+  const allElectr = () => {
+    let objs = [];
+    for (let i = 0; i < 3; i++) {
+      const obj = {};
+      electronicsAllProps.map((item) => {
+        obj[item] = findCurrentValue(item)
+      });
+      objs.push(obj);
+    }
+    return objs;
+  };
+  return { wears, allElectr };
 }
 
 module.exports = dataForTests;

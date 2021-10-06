@@ -146,3 +146,5 @@ const electroItems = [
   new Electronics(data().allElectr()[1]),
   new Electronics(data().allElectr()[2]),
 ];
+console.log(JSON.stringify(wear[0]))
+console.log(JSON.stringify(electroItems[2]))
