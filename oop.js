@@ -165,7 +165,7 @@ function sortProducts(products, sortRule) {
 }
 
 //=================================TESTS=============================
-const data = require("./dataForTests");
+const data = require("./tests/dataForTestsOOP");
 //create items array for Clothes class and for Electronics class
 const wear = [
   new Clothes(data().wears()[0]),
@@ -510,3 +510,4 @@ console.log(
 );
 sp = searchProducts(electroItems, "om");
 printResult(sp);
+
