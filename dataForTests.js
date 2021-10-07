@@ -117,7 +117,8 @@ function dataForTests() {
     return objs;
   };
   const rev1 = getReviewsArray(2);
-  return { wears, allElectr, rev1 };
+  const rev2 = getReviewsArray(10)[9];
+  return { wears, allElectr, rev1, rev2 };
 }
 
 module.exports = dataForTests;

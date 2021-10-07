@@ -22,11 +22,22 @@ function Product(keys) {
     });
   }
 }
+//============Common methods from children abstract class================
+/**
+ * 
+ * @param {*} ID - search param
+ * @returns Review object or string
+ */
 Product.prototype.getReviewByID = function (ID) {
   return this.props.reviews.filter((item) => item.ID === ID).length > 0
     ? this.props.reviews.filter((item) => item.ID === ID)
     : "Nothing to find";
 };
+/**
+ * Serach image in images array
+ * @param {*} index - index image in images array
+ * @returns
+ */
 Product.prototype.getImage = function (index) {
   return index
     ? this.props.images[index]
@@ -34,13 +45,25 @@ Product.prototype.getImage = function (index) {
       : this.props.images[0]
     : this.props.images[0];
 };
+/**
+ * add new review to riewes array in "this" product
+ * @param {*} rev - Review object
+ */
 Product.prototype.addReview = function (rev) {
   this.props.reviews.push(rev);
 };
+/**
+ *
+ * @param {*} ID - id for deleted review
+ */
 Product.prototype.deleteReview = function (ID) {
   const index = this.props.reviews.findIndex((item) => item.ID === ID);
   this.props.reviews.splice(index, 1);
 };
+/**
+ *
+ * @returns number result
+ */
 Product.prototype.getAverageRating = function () {
   let ratAvg = [];
   this.props.reviews.map((item) => {
@@ -82,15 +105,21 @@ Product.prototype.getPriceForQuantity = function (n) {
  */
 function Clothes(data) {
   this.props = data;
-
+  /**
+   *
+   * @param {*} param
+   */
   this.addSize = function (param) {
     this.props.sizes.push(param);
   };
+  /**
+   *
+   * @param {*} param
+   */
   this.deleteSize = function (param) {
     const index = this.props.sizes.indexOf(param);
     this.props.sizes.splice(index, 1);
   };
-  
 }
 Clothes.prototype = Object.create(Product.prototype); //bind Clothes class and Product(parent class)
 
@@ -117,7 +146,9 @@ function searchProducts(products, search) {
       item.props["description"].toLowerCase().indexOf(search.toLowerCase()) !==
         -1
   );
-  return arr.length>0 ? [...new Set(arr)] : `Word ${search} wasn't find in name and decription fields`;
+  return arr.length > 0
+    ? [...new Set(arr)]
+    : `Word ${search} wasn't find in name and decription fields`;
 }
 //=================Sort===============
 /**
@@ -146,88 +177,6 @@ const electroItems = [
   new Electronics(data().allElectr()[1]),
   new Electronics(data().allElectr()[2]),
 ];
-//-------------------------getFullInformation() method test--------------
-
-console.log(
-  `${colors.yellow(
-    "===================TEST getFullInformation()=================="
-  )}`
-);
-wear.map((item, index) => {
-  console.log(
-    colors.magenta(
-      `-----------Clothes class object with index ${index} in 'wear' array: -----------`
-    )
-  );
-  console.log(item.getFullInformation());
-});
-electroItems.map((item, index) => {
-  console.log(
-    colors.magenta(
-      `-----------Electronics class object with index  ${index} in 'electroItems' array: -----------`
-    )
-  );
-  console.log(item.getFullInformation());
-});
-//-------------------------getPriceForQuantity() method test--------------
-console.log(
-  `${colors.yellow(
-    "===================TEST getPriceForQuantity()=================="
-  )}`
-);
-console.log(`${colors.magenta("----------Clothes objects array----")}`);
-wear.map((item) => {
-  const randomQuntity = Math.ceil(Math.random() * 100);
-  console.log(
-    `n=${colors.cyan(randomQuntity)} ; summary price is ${colors.green(
-      item.getPriceForQuantity(randomQuntity)
-    )}`
-  );
-});
-console.log(`${colors.magenta("----------Electronics objects array----")}`);
-electroItems.map((item) => {
-  const randomQuntity = Math.ceil(Math.random() * 100);
-  console.log(
-    `n=${colors.cyan(randomQuntity)} ; summary price is ${colors.green(
-      item.getPriceForQuantity(randomQuntity)
-    )}`
-  );
-});
-//-------------------------sortProducts() method test--------------
-console.log(
-  `${colors.yellow("===================TEST sortProducts()==================")}`
-);
-console.log(
-  `${colors.magenta("----------Clothes objects array -> sort by name ----")}`
-);
-console.log(sortProducts(wear, "name"));
-
-console.log(
-  `${colors.magenta(
-    "----------Electronics objects array -> sort by prices ----"
-  )}`
-);
-console.log(sortProducts(electroItems, "price"));
-
-//-------------------------searchProducts() method test--------------
-console.log(
-  `${colors.yellow(
-    "===================TEST searchProducts()=================="
-  )}`
-);
-console.log(
-  `${colors.magenta(
-    "----------Clothes objects array -> search word is 'ba' ----"
-  )}`
-);
-console.log(searchProducts(wear, "ba"));
-
-console.log(
-  `${colors.magenta(
-    "----------Electronics objects array -> search word is 'om' ----"
-  )}`
-);
-console.log(searchProducts(electroItems, "om"));
 
 //-----------getter tests------------------------
 console.log(
@@ -299,7 +248,7 @@ console.log(
 console.log(
   `${colors.yellow("===================TEST setters==================")}`
 );
-wear[0].props.ID = "xxxx";
+wear[0].props.ID = 4;
 console.log(
   `${colors.cyan("new ID (wear[0])")}: ${colors.green(
     wear[0].props.ID
@@ -384,36 +333,180 @@ console.log(
   )}; old color see before (in getter test)`
 );
 
-electroItems[0].props.warranty = "36"
+electroItems[0].props.warranty = "36";
 console.log(
   `${colors.cyan("warranty (electroItems[0])")}: ${colors.green(
     electroItems[0].props.warranty
   )}; old warranty see before (in getter test)`
 );
 
-electroItems[1].props.power = "3000"
+electroItems[1].props.power = "3000";
 console.log(
   `${colors.cyan("power (electroItems[1])")}: ${colors.green(
     electroItems[1].props.power
   )}; old power see before (in getter test)`
 );
-
-
+console.log(
+  `${colors.yellow("===================TEST common methods==================")}`
+);
 //----------------Test getReviewByID-------------
 console.log(
-  `${colors.cyan("getReviewbyID() method test. ID=1 try to find review in wear[1]")}: ${colors.green(
-    wear[1].getReviewByID(1)    
-  )}`
+  `${colors.cyan(
+    "getReviewbyID() method test. ID=1 try to find review in wear[1]"
+  )}: ${colors.green(wear[1].getReviewByID(1))}`
 );
 
 console.log(
-  `${colors.cyan("getReviewbyID() method test. ID=2 try to find review in electroItems[2]")}: ${colors.green(
-    electroItems[2].getReviewByID(2)    
-  )}`
+  `${colors.cyan(
+    "getReviewbyID(ID) method test. ID=2 try to find review in electroItems[2]"
+  )}: ${colors.green(electroItems[2].getReviewByID(2))}`
+);
+//----------------Test getImage(index)-------------
+console.log(
+  `${colors.cyan(
+    "getImage(index) method test: try to find image with index-> 2 in wear[2] "
+  )}: ${colors.green(wear[2].getImage(2))}`
+);
+//---------------Test addReview()--------------
+const rev = data().rev2;
+wear[1].addReview(rev);
+console.log(
+  `${colors.cyan(
+    `addReview() method test: try to add review in wear[1]-> \n ${JSON.stringify(
+      rev
+    )}.\nSee result:\n `
+  )}${colors.green(wear[1].props.reviews)}`
 );
 
+//---------------Test deleteReview()--------------
+
+wear[1].deleteReview(rev.ID);
 console.log(
-  `${colors.cyan("getImage() method test: try to find image with index-> 2 in wear[2] ")}: ${colors.green(
-    wear[2].getImage(2)
+  `${colors.cyan(
+    `deleteReview() method test: try to add review in wear[1]-> \n ${JSON.stringify(
+      rev
+    )}.\nSee result:\n `
+  )}${colors.green(wear[1].props.reviews)}`
+);
+//----------------Test getAverageRating()-------------
+console.log(
+  `${colors.cyan(
+    "getAverageRating() method test: try to find average rating in electroItems[0]. See result:\n"
+  )}${colors.green(electroItems[0].getAverageRating())}`
+);
+
+//-------------------------getFullInformation() method test--------------
+
+console.log(
+  `${colors.yellow(
+    "===================TEST getFullInformation()=================="
   )}`
 );
+wear.map((item, index) => {
+  console.log(
+    colors.magenta(
+      `-----------Clothes class object with index ${index} in 'wear' array: -----------`
+    )
+  );
+  console.log(item.getFullInformation());
+});
+electroItems.map((item, index) => {
+  console.log(
+    colors.magenta(
+      `-----------Electronics class object with index  ${index} in 'electroItems' array: -----------`
+    )
+  );
+  console.log(item.getFullInformation());
+});
+//-------------------------getPriceForQuantity() method test--------------
+console.log(
+  `${colors.yellow(
+    "===================TEST getPriceForQuantity()=================="
+  )}`
+);
+console.log(`${colors.magenta("----------Clothes objects array----")}`);
+wear.map((item) => {
+  const randomQuntity = Math.ceil(Math.random() * 100);
+  console.log(
+    `n=${colors.cyan(randomQuntity)} ; summary price is ${colors.green(
+      item.getPriceForQuantity(randomQuntity)
+    )}`
+  );
+});
+console.log(`${colors.magenta("----------Electronics objects array----")}`);
+electroItems.map((item) => {
+  const randomQuntity = Math.ceil(Math.random() * 100);
+  console.log(
+    `n=${colors.cyan(randomQuntity)} ; summary price is ${colors.green(
+      item.getPriceForQuantity(randomQuntity)
+    )}`
+  );
+});
+console.log(
+  `${colors.yellow(
+    "===================TEST Clothes class method only=================="
+  )}`
+);
+//----------------add size----------------------------------
+wear[0].addSize("XXXXXLLLLL");
+console.log(
+  `${colors.cyan(
+    "addSize() method test: try to add size XXXXXLLLLL in wears[0]. See result:\n"
+  )}${colors.green(wear[0].props.sizes)}`
+);
+//--------------delete size
+wear[0].deleteSize("XXXXXLLLLL");
+console.log(
+  `${colors.cyan(
+    "deleteSize() method test: try to add size XXXXXLLLLL in wears[0]. See result:\n"
+  )}${colors.green(wear[0].props.sizes)}`
+);
+
+/**
+ * Help method for print results sort or search methods
+ * @param {*} param - array or string for print
+ */
+function printResult(param) {
+  typeof param === "object"
+    ? param.map((item) => {
+        console.log(item.getFullInformation());
+      })
+    : console.log(param);
+}
+//-------------------------sortProducts() method test--------------
+console.log(
+  `${colors.yellow("===================TEST sortProducts()==================")}`
+);
+console.log(
+  `${colors.magenta("----------Clothes objects array -> sort by name ----")}`
+);
+let sp = sortProducts(wear, "name");
+printResult(sp);
+console.log(
+  `${colors.magenta(
+    "----------Electronics objects array -> sort by prices ----"
+  )}`
+);
+sp = sortProducts(electroItems, "price");
+printResult(sp);
+//-------------------------searchProducts() method test--------------
+console.log(
+  `${colors.yellow(
+    "===================TEST searchProducts()=================="
+  )}`
+);
+console.log(
+  `${colors.magenta(
+    "----------Clothes objects array -> search word is 'ba' ----"
+  )}`
+);
+sp = searchProducts(wear, "ba");
+printResult(sp);
+
+console.log(
+  `${colors.magenta(
+    "----------Electronics objects array -> search word is 'om' ----"
+  )}`
+);
+sp = searchProducts(electroItems, "om");
+printResult(sp);
