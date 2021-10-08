@@ -2,7 +2,9 @@
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {
-    "chance": "^1.1.8"
+    "chance": "^1.1.8",
+    "readline-sync": "^1.4.10",
+    "utf8": "^3.0.0"
   },
   "name": "backend",
   "version": "1.0.0",
