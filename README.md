@@ -5,6 +5,11 @@ Library: https://www.npmjs.com/package/colors
 I am using the "Chance" library to generate random data for created classes.  
 Library: https://chancejs.com/
 
+# Let's start  
+1. Clone repository
+2. Open folder in VSCode (for example)
+3. Open terminal and input 'npm i' command
+4. Run js file in terminal -> 'node file'
 # tasks:
 1. task1 - dataTypes.js - learn data types, constructor-function  
 2. task2 - regular.js - learn regular expressions  
