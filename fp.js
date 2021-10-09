@@ -63,10 +63,10 @@ async function main() {
       return result.join(" ");
     };
   }
-  const answer = await question("Введите свою фразу: ");
-  const phrase = answer || "Київ";
 
   try {
+    const answer = await question("Введите свою фразу: ");
+    const phrase = answer || "Київ";
     const file = fs.readFileSync("./tests/cities.csv", "utf8"); //read file
     console.log(csvMode(file)(phrase)); //modify CSV data and get result
   } catch (err) {
