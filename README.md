@@ -14,4 +14,5 @@ Library: https://chancejs.com/
 1. task1 - dataTypes.js - learn data types, constructor-function  
 2. task2 - regular.js - learn regular expressions  
 3. task3 - oop.js - learn classes, abstract classes, proptotype  
-4. task4 - fp.js - functional programming  
+4. task4 - fp.js - functional programming
+5. task5 - go2.js - learn of http requests  -> For test use command 'node tester.js 2 go2.js'
