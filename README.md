@@ -16,3 +16,6 @@ Library: https://chancejs.com/
 3. task3 - oop.js - learn classes, abstract classes, proptotype  
 4. task4 - fp.js - functional programming
 5. task5 - go2.js - learn of http requests  -> For test use command 'node tester.js 2 go2.js'
+6. task6 - httpGet.js - learn of work with http param requests  -> For test use command 'node httpGet "GET /sum?nums=1,2,3 HTTP/1.1
+Host: student.shpp.me
+"'
