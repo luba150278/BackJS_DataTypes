@@ -69,12 +69,12 @@ function processHttpRequest($http) {
     const fileRows = file.split("\r\n"); //Convert text to rows array. ATTENTION: for linux we use const fileRows = file.split("\n")
     const check = fileRows.filter((item) => item.trim() === searchText);
     check.length === 1
-      ? outputHttpResponse(200, "OK", '<h1 style="color:green">FOUND</h1>')
+      ? outputHttpResponse(200, "OK", '<h1 style="color:green">FOUND</h1>') //user:password found
       : outputHttpResponse(
           401,
           "Unauthorized",
           '<h1 style="color:green">User didn\'t find</h1>'
-        );
+        );  //user:password did't find
   } catch {
     outputHttpResponse(500, "Internal Server Error", ""); //if file with passwords 
   }
