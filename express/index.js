@@ -7,6 +7,11 @@ const app = express();
 async function startApp() {
   try {
     app.listen(PORT, () => console.log(`server started on port ${PORT}`));
+    //create folder 'static' where was save counter data file
+    const dir = "./static";
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
     app.get("/hello", (req, res) => {
       try {
         let counter = JSON.parse(fs.readFileSync("./static/count.json"));
