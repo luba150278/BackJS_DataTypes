@@ -32,3 +32,5 @@ Library: https://chancejs.com/
 login=student&password=12345
 "
 File with passwords: "test/password.txt"
+
+8. task8 - express Please, open this folder as project in VSCode. Use commands: <npm i> and after <npm run start> for run local server
