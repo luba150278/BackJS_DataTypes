@@ -12,6 +12,7 @@ async function startApp() {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
+    //Run counter
     app.get("/hello", (req, res) => {
       try {
         let counter = JSON.parse(fs.readFileSync("./static/count.json"));
